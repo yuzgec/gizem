@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class PageCategoryRequest extends FormRequest
+{
+
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'title:tr'                 => 'required|min:6|max:99',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title:tr.required'            => 'Sayfa Kategori başlığını giriniz (TR)',
+            'title:tr.max'                 => 'Sayfa Kategori başlığı en fazla 99 karakter olabilir (TR)',
+            'title:tr.min'                 => 'Sayfa Kategori başlığı en fazla 6 karakter olabilir (TR)'
+        ];
+    }
+}
