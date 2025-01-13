@@ -1,3 +1,4 @@
+
 <footer id="footer">
     <div class="container">
         <div class="row py-5 my-4">
@@ -26,37 +27,37 @@
 
                         <ul class="list list-icons list-icons-sm">
                            
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Hakkımızda
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Belgelerimiz
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white   "></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Referanslar
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Video Galeri
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Foto Galeri
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        Blog
                                     </a>
                                 </li>
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="#" class="link-hover-style-1 ms-1">    
                                        İletişim
                                     </a>
@@ -70,7 +71,7 @@
 
                         <ul class="list list-icons list-icons-sm">
                             @foreach ($ServiceCategory as $item)
-                                <li><i class="fas fa-angle-right"></i>
+                                <li><i class="fas fa-angle-right text-color-white"></i>
                                     <a href="{{ route('categorydetail', $item->slug)}}" class="link-hover-style-1 ms-1">    
                                         {{ $item->title}}
                                     </a>

@@ -2,7 +2,7 @@
 @section('content')
 
 <section class="page-header page-header-modern page-header-background page-header-background-md overlay overlay-color-dark overlay-show overlay-op-7" 
-    style="background-image: url({{ (!$Detay->getFirstMediaUrl('page')) ? '/backend/resimyok.jpg': $Detay->getFirstMediaUrl('page','img')}});">
+    style="background-image: url({{ $Detay->getFirstMediaUrl('page','img')}});">
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-12 align-self-center p-static order-2 text-center">
@@ -20,6 +20,20 @@
     </div>
 </section>
 
+<div class="custom-pos-1">
+    <div class="marquee py-3 custom-bg-gradient-1" data-duration="50000" data-gap="10" data-duplicated="true" data-startVisible="true">
+        <p class="text-5-5 text-dark font-weight-medium m-0 d-block py-3 ws-nowrap custom-font-secondary">
+            <span data-clone-element="5">
+                @foreach ($ServiceCategory as $item)
+                <a href="{{ route('categorydetail', $item->slug)}}" class="text-decoration-none text-white text-3-5" title="{{ $item->title}}">
+                    {{ $item->title}}   •  
+                </a>
+                @endforeach
+            </span>
+        </p>
+    </div>
+</div>
+
 <div class="container my-2  pb-5">
     <div class="row">
         <div class="col-lg-8 order-lg-2 mb-5 mb-lg-0 appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="500" style="animation-delay: 500ms;">
@@ -36,8 +50,8 @@
                         <div class="row">
                             @foreach ($Detay->getMedia('gallery') as $item)
                             <div class="col-md-4 col-6 mb-3">
-                                <a class="d-inline-block img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon mb-1 me-1" href="{{ $item->getUrl() }}">
-                                    <img class="img-fluid" src="{{ $item->getUrl() }}" alt="{{ $Detay->title.' -'.config('settings.siteTitle')}}">
+                                <a class="d-inline-block img-thumbnail img-thumbnail-no-borders img-thumbnail-hover-icon mb-1 me-1" href="{{ $item->getUrl('watermark') }}">
+                                    <img class="img-fluid" src="{{ $item->getUrl('thumb') }}" alt="{{ $Detay->title.' -'.config('settings.siteTitle')}}">
                                 </a>
                             </div>
                             @endforeach
@@ -49,7 +63,7 @@
             </div>
        </div>
         <div class="col-lg-4 order-lg-1 appear-animation animated fadeInUpShorter appear-animation-visible" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="250" style="animation-delay: 250ms;">
-            <div class="card box-shadow-1 custom-border-radius-1 mb-5">
+            <div class="card box-shadow-1 custom-border-radius-1 mb-3">
                 <div class="card-body z-index-1 py-4 my-3">
                     @foreach ($ServiceCategory->where('id', $Detay->category) as $item)
                     <h4 class="text-color-dark font-weight-bold text-4 mb-4">{{ $item->title}}</h4>
@@ -63,6 +77,14 @@
                         @endforeach
                     </ul>
                     @endforeach
+                </div>
+            </div>
+
+            <div class="card box-shadow-1 custom-border-radius-1 mb-5">
+                <div class="card-body z-index-1 py-4 my-3">
+                    <a href="{{ route('contactus')}}" title="İletişime Geçin">
+                        <img src="/yan-banner.jpg" class="img-fluid" alt="{{ config('settings.siteTitle')}} - İletişime Geçin">
+                    </a>
                 </div>
             </div>
            

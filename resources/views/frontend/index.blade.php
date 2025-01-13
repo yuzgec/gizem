@@ -89,6 +89,9 @@
     </div>
 </div>
 
+
+
+
 <div class="container py-5 my-5">
     <div class="row justify-content-center pb-3 mb-4">
         <div class="col-lg-9 col-xl-8 text-center">
@@ -196,7 +199,9 @@
         <div class="col-md-4 col-lg-3 text-center text-md-left">
             <div class="" data-="fadeInUpShorter" data--delay="1000">
                 <h3 class="font-weight-bold text-color-dark text-transform-none text-5-5 mb-3">Misyonumz</h3>
-                <p class="pb-1 mb-2"></p>
+                <p class="pb-1 mb-2">Müşterilerimizin ihtiyaçlarını anlayarak, yaratıcı ve etkili baskı çözümleri sunmaktır. Kaliteli hizmet anlayışımızla, her projede müşterilerimize değer katmayı ve işlerini bir adım öteye taşımayı hedefliyoruz.
+
+                </p>
                 <a href="{{ route('corporatedetail', 'hakkimizda')}}" class="btn btn-danger  font-weight-bold btn-px-5 py-3 mb-2">HAKKIMIZDA</a>
 
                 <hr class="my-4">
@@ -209,12 +214,17 @@
         </div>
     </div>
 </div>
-
-@endsection
-@section('customCSS')
-   
-@endsection
-
-@section('customJS')
-   
+<div class="custom-pos-1">
+    <div class="marquee py-3 custom-bg-gradient-1" data-duration="50000" data-gap="10" data-duplicated="true" data-startVisible="true">
+        <p class="text-5-5 text-dark font-weight-medium m-0 d-block py-3 ws-nowrap custom-font-secondary">
+            <span data-clone-element="5">
+                @foreach ($ServiceCategory as $item)
+                <a href="{{ route('categorydetail', $item->slug)}}" class="text-decoration-none text-white text-3-5" title="{{ $item->title}}">
+                    {{ $item->title}}   •  
+                </a>
+                @endforeach
+            </span>
+        </p>
+    </div>
+</div>
 @endsection

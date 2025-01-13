@@ -3,7 +3,7 @@
 @section('content')
     
 <section class="page-header page-header-modern page-header-background page-header-background-md overlay overlay-color-dark overlay-show overlay-op-7" 
-style="background-image: url(img/page-header/page-header-about-us.jpg);">
+style="background-image: url(/banner-2.jpg);">
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-12 align-self-center p-static order-2 text-center">
@@ -19,7 +19,19 @@ style="background-image: url(img/page-header/page-header-about-us.jpg);">
     </div>
 </div>
 </section>
-
+<div class="custom-pos-1">
+    <div class="marquee py-3 custom-bg-gradient-1" data-duration="50000" data-gap="10" data-duplicated="true" data-startVisible="true">
+        <p class="text-5-5 text-dark font-weight-medium m-0 d-block py-3 ws-nowrap custom-font-secondary">
+            <span data-clone-element="5">
+                @foreach ($ServiceCategory as $item)
+                <a href="{{ route('categorydetail', $item->slug)}}" class="text-decoration-none text-white text-3-5" title="{{ $item->title}}">
+                    {{ $item->title}}   •  
+                </a>
+                @endforeach
+            </span>
+        </p>
+    </div>
+</div>
 
 <div class="container py-4">
 

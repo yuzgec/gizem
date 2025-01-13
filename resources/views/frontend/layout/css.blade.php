@@ -15,4 +15,16 @@
   b, strong {
     font-weight: bold !important;
     }
+    .custom-pos-1 {
+      margin: -48px -5% 0 -5%;
+      margin: -3rem -5% 0 -5%;
+  }
+    .custom-bg-gradient-1 {
+        background-color: var(--tertiary) !important;
+        background-image: linear-gradient(to right, #e5007d 0%, #009ee3 100%) !important;
+    }
+    .marquee {
+        overflow: hidden;
+        white-space: nowrap;
+    }
 </style>
