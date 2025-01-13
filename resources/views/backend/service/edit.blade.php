@@ -106,7 +106,7 @@
                 </div>
                 <div class="card-body justify-content-center align-items-center">
                         <div class="col">
-                            <img src="{{ $Edit->getFirstMediaUrl('page')}}" class="img-fluid mb-2 mt-2" alt="Image">
+                            <img src="{{ $Edit->getFirstMediaUrl('page', 'thumb')}}" class="img-fluid mb-2 mt-2" >
                         </div>
                     <x-form-file label="" name="image"></x-form-file>
                 </div>
@@ -143,7 +143,9 @@
                             @foreach($Edit->getMedia('gallery') as $item)
                                 <tr id="gallery_{{$item->id}}">
                                     <td>
-                                        {{ $item }}
+                                        <a data-fslightbox="gallery" href="{{ $item->getUrl('img') }}">
+                                            <img src="{{ $item->getUrl('thumb') }}" class="img-fluid" width="50">
+                                        </a>
                                     </td>
                                     <td>
                                         <form action="{{route('service.deleteGaleriDelete', $Edit->id)}}" method="POST">

@@ -26,19 +26,32 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-        $New = Service::create($request->except('_token', 'image', 'gallery'));
+        $create = Service::create($request->except('_token', 'image', 'gallery'));
 
 
-        if($request->hasfile('image')){
-            $New->addMedia($request->image)->toMediaCollection('page');
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
+
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
+
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
         }
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $New->addMedia($item)->toMediaCollection('gallery');
-            }
-        }
-
-        $New->save();
 
         toast(SWEETALERT_MESSAGE_CREATE,'success');
         return redirect()->route('service.index');
@@ -57,27 +70,35 @@ class ServiceController extends Controller
         return view('backend.service.edit', compact('Edit', 'Kategori'));
     }
 
-    public function update(Request $request, Service $Update)
+    public function update(Request $request, Service $update)
     {
-        $Update->update($request->except('_token', '_method', 'image', 'gallery'));
+        $update->update($request->except('_token', '_method', 'image', 'gallery'));
 
-        if($request->removeImage == "1"){
-            $Update->media()->where('collection_name', 'page')->delete();
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
+
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
+
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
+
         }
-
-        if ($request->hasFile('image')) {
-            $Update->media()->where('collection_name', 'page')->delete();
-            $Update->addMedia($request->image)->toMediaCollection('page');
-        }
-
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $Update->addMedia($item)->toMediaCollection('gallery');
-            }
-        }
-
-        $Update->save();
-
         toast(SWEETALERT_MESSAGE_UPDATE,'success');
         return redirect()->route('service.index');
 
