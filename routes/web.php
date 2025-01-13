@@ -4,7 +4,9 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
+// Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
+
+    Route::redirect('/', '/en', 301);
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get(__('site.iletisim_link'), [HomeController::class, 'contactus'])->name('contactus');
@@ -24,7 +26,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'lo
     Route::get('video', [HomeController::class, 'video'])->name('video');
     Route::get('foto', [HomeController::class, 'foto'])->name('foto');
 
-});
+// });
 
 Route::group(["prefix"=>"go", 'middleware' => ['auth','web', 'admin']],function() {
     Route::get('/', 'DashboardController@index')->name('go');
