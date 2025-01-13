@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/frontend/css/theme.css?ver=5">
 <link rel="stylesheet" href="/frontend/css/theme-elements.css?ver=5">
 <link rel="stylesheet" href="/frontend/css/andi.css">
+<meta name="google-site-verification" content="35k7GuCiHjwvjLBo6m6xZRQkyOpPWDT2Eu3ROie2Ryc" />
 <style>
   b, strong {
     font-weight: bold !important;

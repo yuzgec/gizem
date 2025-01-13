@@ -88,8 +88,11 @@
     <div class="footer-copyright footer-copyright-style-2">
         <div class="container py-2">
             <div class="row py-4">
-                <div class="col d-flex align-items-center justify-content-center">
+                <div class="col-12 d-flex align-items-center justify-content-center">
                     <p class="text-white text-4">© Copyright - {{config('settings.siteName').' '. date('Y')}}. All Rights Reserved.</p>
+                </div>
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <p class="text-white text-4"><a href="https://godijital.net" target="_blank" title="İzmir Web Tasarım ( GO Dijital)"> İzmir Web Tasarım ( GO Dijital)</a></p>
                 </div>
             </div>
         </div>
