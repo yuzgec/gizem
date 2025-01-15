@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function(){
-
-    Route::redirect('/', '/en', 301);
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get(__('site.iletisim_link'), [HomeController::class, 'contactus'])->name('contactus');
