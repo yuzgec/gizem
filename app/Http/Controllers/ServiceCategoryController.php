@@ -25,15 +25,18 @@ class ServiceCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $New = ServiceCategory::create($request->except('_token', 'image', 'gallery'));
+        $create = ServiceCategory::create($request->except('_token', 'image'));
 
-        if ($request->image) {
-            $New->addMedia($request->image)->toMediaCollection();
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
         if ($request->parent_id) {
             $node = ServiceCategory::find($request->parent_id);
-            $node->appendNode($New);
+            $node->appendNode($create);
         }
 
         toast(SWEETALERT_MESSAGE_CREATE, 'success');
@@ -56,18 +59,21 @@ class ServiceCategoryController extends Controller
         return view('backend.servicecategory.edit', compact('Edit', 'Kategori'));
     }
 
-    public function update(Request $request, ServiceCategory $Update)
+    public function update(Request $request, ServiceCategory $update)
     {
-        tap($Update)->update($request->except('_token', 'image'));
+        tap($update)->update($request->except('_token', 'image'));
 
-        if ($request->hasFile('image')) {
-            $Update->media()->delete();
-            $Update->addMedia($request->image)->toMediaCollection();
-        }
+         $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
+
 
         if ($request->parent) {
             $node = ServiceCategory::find($request);
-            $node->appendNode($Update);
+            $node->appendNode($update);
         }
 
         toast(SWEETALERT_MESSAGE_UPDATE, 'success');

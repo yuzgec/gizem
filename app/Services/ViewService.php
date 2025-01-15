@@ -5,7 +5,6 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Models\Blog;
 use App\Models\Page;
-use App\Models\Team;
 use App\Models\Video;
 use App\Models\Service;
 use App\Models\Category;
@@ -89,35 +88,40 @@ class ViewService
         };
     }
 
-    public function getMostViewedPages(int $limit = 10): Collection
-    {
-        // URL'den veya session'dan locale'i al
+    public function getMostViewedPages(
+        int $limit = 10, 
+        array $selectedModels = [], 
+        string $periodType = self::PERIOD_ALL
+    ): Collection {
         $locale = request('locale', app()->getLocale());
+        $period = $this->calculatePeriod($periodType);
         
-        $models = collect([
-            Blog::class,
-            Service::class,
-            Page::class,
-            Team::class,
-            Category::class,
-            Video::class,
-        ]);
-
         $allViews = collect();
 
-        foreach ($models as $model) {
-            $views = $model::orderByViews('desc')
-                ->with(['translations', 'views'])
-                ->get()
-                ->map(function ($item) use ($locale) {
-                    // Translation'dan ismi al
+        foreach ($selectedModels as $model) {
+            $query = $model::query()
+                ->with(['translations', 'views']);
+
+            if ($period) {
+                $query->orderByViews('desc', $period);
+            } else {
+                $query->orderByViews('desc');
+            }
+
+            $views = $query->get()
+                ->map(function ($item) use ($locale, $period) {
                     $translation = $item->translations
                         ->where('locale', $locale)
                         ->first();
                     
-                    // Dile göre görüntülenme sayısını al
                     $viewCount = $item->views()
                         ->where('collection', $locale)
+                        ->when($period, function($query) use ($period) {
+                            $query->whereBetween('viewed_at', [
+                                $period->getStartDateTime(),
+                                $period->getEndDateTime()
+                            ]);
+                        })
                         ->count();
                     
                     return [
@@ -131,13 +135,9 @@ class ViewService
             $allViews = $allViews->concat($views);
         }
 
-        // Görüntülenme sayısına göre sırala
         $allViews = $allViews->sortByDesc('views');
-
-        // En yüksek görüntülenme sayısını bul
         $maxViews = $allViews->max('views');
 
-        // Yüzdeleri hesapla
         $allViews = $allViews->map(function ($item) use ($maxViews) {
             if ($maxViews > 0 && isset($item['views'])) {
                 $item['percentage'] = ($item['views'] / $maxViews) * 100;

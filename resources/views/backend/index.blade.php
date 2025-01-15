@@ -59,28 +59,7 @@
     </div>
 
     <div class="col-12 col-md-3 mt-3">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Aranan Kelimeler</h3>
-            </div>
-            <table class="table card-table table-vcenter">
-                <thead>
-                <tr>
-                    <th>Aranan Kelime</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($Search as $item)
-                    <tr>
-                        <td>{{ $item->key }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ $item->language }}</td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+        @livewire('top-pages')
     </div>
 
 @endsection

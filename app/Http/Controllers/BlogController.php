@@ -27,18 +27,31 @@ class BlogController extends Controller
 
     public function store(BlogRequest $request)
     {
-        $New = Blog::create($request->except('_token', 'image', 'gallery'));
+        $create = Blog::create($request->except('_token', 'image', 'gallery'));
 
-        if($request->hasfile('image')){
-            $New->addMedia($request->image)->toMediaCollection('page');
-        }
-        if($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item){
-                $New->addMedia($item)->toMediaCollection('gallery');
-            }
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
-        $New->save();
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
+
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $create,
+                $files,
+                'gallery',
+            );
+        }
 
         toast(SWEETALERT_MESSAGE_CREATE,'success');
         return redirect()->route('blog.index');
@@ -59,26 +72,36 @@ class BlogController extends Controller
         return view('backend.blog.edit', compact('Edit', 'Kategori'));
     }
 
-    public function update(BlogRequest $request, Blog $Update)
+    public function update(BlogRequest $request, Blog $update)
     {
-        $Update->update($request->except('_token', '_method', 'image', 'gallery'));
+        $update->update($request->except('_token', '_method', 'image', 'gallery'));
 
-        if ($request->removeImage == "1") {
-            $Update->media()->where('collection_name', 'page')->delete();
+        
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
+
+        $this->mediaService->updateMedia(
+            $update, 
+            $request->file('cover'),
+            'cover',
+            false
+        );
+
+        if ($request->hasFile('gallery')) {
+            $files = $request->file('gallery');
+            
+            $this->mediaService->handleMultipleMediaUpload(
+                $update,
+                $files,
+                'gallery',
+                false
+            );
+
         }
-
-        if ($request->hasFile('image')) {
-            $Update->media()->where('collection_name', 'page')->delete();
-            $Update->addMedia($request->image)->toMediaCollection('page');
-        }
-
-        if ($request->hasfile('gallery')) {
-            foreach ($request->gallery as $item) {
-                $Update->addMedia($item)->toMediaCollection('gallery');
-            }
-        }
-
-        $Update->save();
 
         toast(SWEETALERT_MESSAGE_UPDATE,'success');
         return redirect()->route('blog.index');

@@ -23,15 +23,18 @@ class BlogCategoryController extends Controller
 
     public function store(BlogCategoryRequest $request)
     {
-        $New = BlogCategory::create($request->except('_token', 'image', 'gallery'));
+        $create = ServiceCategory::create($request->except('_token', 'image'));
 
-        if ($request->image) {
-            $New->addMedia($request->image)->toMediaCollection();
-        }
+        $this->mediaService->handleMediaUpload(
+            $create, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
         if ($request->parent_id) {
             $node = BlogCategory::find($request->parent_id);
-            $node->appendNode($New);
+            $node->appendNode($create);
         }
 
         toast(SWEETALERT_MESSAGE_CREATE, 'success');
@@ -53,31 +56,20 @@ class BlogCategoryController extends Controller
         return view('backend.blogcategory.edit', compact('Edit', 'Kategori'));
     }
 
-    public function update(BlogCategoryRequest $request, $id)
+    public function update(BlogCategoryRequest $request, BlogCategory $update)
     {
+        tap($update)->update($request->except('_token', 'image'));
 
-        $Update = BlogCategory::findOrFail($id);
-
-        $Update->title = $request->title;
-        $Update->short = $request->short;
-        $Update->desc = $request->desc;
-
-        $Update->seo1 = $request->seo1;
-        $Update->seo2 = $request->seo2;
-        $Update->seo3 = $request->seo3;
-
-        $Update->parent_id = $request->parent_id;
-
-        $Update->save();
-
-        if ($request->hasFile('image')) {
-            $Update->media()->delete();
-            $Update->addMedia($request->image)->toMediaCollection();
-        }
+         $this->mediaService->updateMedia(
+            $update, 
+            $request->file('image'),
+            'page',
+            false
+        );
 
         if ($request->parent) {
             $node = BlogCategory::find($request);
-            $node->appendNode($Update);
+            $node->appendNode($update);
         }
 
         toast(SWEETALERT_MESSAGE_UPDATE, 'success');
