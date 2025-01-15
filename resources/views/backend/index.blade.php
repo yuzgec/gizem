@@ -59,7 +59,7 @@
     </div>
 
     <div class="col-12 col-md-3 mt-3">
-        @livewire('top-pages')
+      
     </div>
 
 @endsection

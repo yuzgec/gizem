@@ -7,7 +7,7 @@
     <title>@yield('title', config('app.name'). ' | GO Dijital Gelişmiş Yönetim Paneli')</title>
     @include('backend.layout.css')
     @yield('customCSS')
-    @livewireStyles
+    
 </head>
 <body class="antialiased">
 <div class="wrapper">
@@ -59,6 +59,5 @@
 
     @yield('customJS')
     <!-- Livewire Scripts -->
-    @livewireScripts
 </body>
 </html>

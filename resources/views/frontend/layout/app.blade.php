@@ -20,6 +20,10 @@
             box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
             z-index: 1000;
         }
+
+        .fixed-bottom-bar a:hover {
+            text-decoration: none;
+        }
         
         .fixed-bottom-bar .contact-item {
             display: flex;
@@ -29,7 +33,7 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 8px;
+            padding: 18px;
             border-radius: 8px;
         }
         
@@ -95,9 +99,7 @@
 </head>
 
 <body>
-    {{-- <div class="progress progress-reading p-fixed top-0 w-100 left-0">
-        <div class="progress-bar border-radius-0 bg-danger" role="progressbar" style="width: 0%"></div>
-    </div> --}}
+  
 
     <div class="body">
     
@@ -117,19 +119,19 @@
             <div class="row align-items-center g-2">
                 <div class="col-4 text-center">
                     <a title="WhatsApp" href="https://wa.me/{{config('settings.whatsapp')}}" class="contact-item whatsapp-item">
-                        <i class="fab fa-whatsapp"></i>
+                        <i class="fab fa-whatsapp text-2"></i>
                         <span>WhatsApp</span>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a title="İnstagram" href="https://www.instagram.com/{{config('settings.instagram')}}" class="contact-item instagram-item" target="_blank">
-                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-instagram text-2"></i>
                         <span>{{config('settings.instagram')}}</span>
                     </a>
                 </div>
                 <div class="col-4 text-center">
                     <a title="Telefon" href="tel:{{config('settings.telefon1')}}" class="contact-item phone-item">
-                        <i class="fas fa-phone-alt"></i>
+                        <i class="fas fa-phone-alt text-2"></i>
                         <span>{{config('settings.telefon1')}}</span>
                     </a>
                 </div>
